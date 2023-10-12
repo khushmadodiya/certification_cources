@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "512490773695",
+    "project_id": "certification-cources",
+    "storage_bucket": "certification-cources.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512490773695:android:04f3a217ad810e15747a0a",
+        "android_client_info": {
+          "package_name": "com.example.certification_cources"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFxJSUdVZxnlj8ku4FxpuXpfxgmW0Gj3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
