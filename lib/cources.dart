@@ -8,7 +8,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'firstScreen.dart';
 
-class Cources extends StatefulWidget{
+class Cources extends StatefulWidget {
   final int index;
   @override
   Cources({required this.index});
@@ -48,81 +48,112 @@ class _CourcesState extends State<Cources> {
         disableDragSeek: false,
         loop: true,
       ),
-
-
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    var isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     if (isLandscape) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     }
-    return  WillPopScope(
-        onWillPop: () async {
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          isLandscape =
+              MediaQuery.of(context).orientation == Orientation.values;
+          print("poped");
+        });
 
-      setState(() {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-        isLandscape = MediaQuery.of(context).orientation == Orientation.values;
-        print("poped");
-      });
+        return false;
+      },
+      child: Scaffold(
+          appBar: isLandscape
+              ? null
+              : AppBar(
+                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                  title: Text('course'),
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        },
+                        icon: Icon(Icons.home))
+                  ],
+                ),
+          body: isLandscape
+              ? YoutubePlayer(
+                  controller: _controller,
+                  showVideoProgressIndicator: true,
+                  controlsTimeOut: const Duration(seconds: 3),
+                  aspectRatio: 16 / 10,
+                )
+              : Stack(
+              alignment: Alignment.bottomRight,
+                children:[ ListView(
+                    children: [
+                      YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                        controlsTimeOut: const Duration(seconds: 3),
+                        aspectRatio: 16 / 10,
+                      ),
+                      Stack(alignment: Alignment.bottomRight, children: [
+                        Container(
+                          // height: double.infinity,
+                          height: 8000,
+                          child: InAppWebView(
+                            initialUrlRequest: URLRequest(
+                              url: Uri.parse(
+                                  "https://practice.geeksforgeeks.org/courses?source=google&medium=cpc&device=c&keyword=gfg&matchtype=b&campaignid=20039445781&adgroup=147845288105&gad=1&gclid=CjwKCAjw-KipBhBtEiwAWjgwrG1fYiqVqMdIID2QFzv-9JkaOL0AE6WUMgzRY01DFY7__vMFPWsa2RoCDVoQAvD_BwE"),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FilledButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserName()));
+                              },
+                              child: const Text(
+                                "Certificate",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              )),
+                        )
+                      ]),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FilledButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserName()));
+                        },
+                        child: const Text(
+                          "Certificate",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )),
+                  ),
+      ]
 
-      return false;
-    },
-     child: Scaffold(
-      appBar: isLandscape ? null :AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('course'),
-      actions: [
-        IconButton(onPressed: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-        }, icon: Icon(Icons.home))
-      ],),
-           body:isLandscape? YoutubePlayer(
-                     controller: _controller,
-                     showVideoProgressIndicator: true,
-                     controlsTimeOut: const Duration(seconds: 3),
-                     aspectRatio: 16 / 10,
-                     ): ListView(
-             children: [
-               YoutubePlayer(
-                 controller: _controller,
-                 showVideoProgressIndicator: true,
-                 controlsTimeOut: const Duration(seconds: 3),
-                 aspectRatio: 16 / 10,
-               ),
-               Stack(
-                   alignment: AlignmentDirectional.bottomEnd,
-                   children: [
-                     Container(
-                       // height: double.infinity,
-                       height: 1200,
-                       child: InAppWebView(
-                         initialUrlRequest: URLRequest(
-                           url: Uri.parse(
-                               "https://practice.geeksforgeeks.org/courses?source=google&medium=cpc&device=c&keyword=gfg&matchtype=b&campaignid=20039445781&adgroup=147845288105&gad=1&gclid=CjwKCAjw-KipBhBtEiwAWjgwrG1fYiqVqMdIID2QFzv-9JkaOL0AE6WUMgzRY01DFY7__vMFPWsa2RoCDVoQAvD_BwE"),
-                         ),
-                       ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Container(
-                         height: 50,
-                         width: 200,
-                         child: FilledButton(onPressed: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>UserName()));
-                         }, child: Text("Certificate",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                       ),
-                     )
-                   ]
-               ),
-             ],
-           )
-           ),
-
+              )
+    ),
     );
   }
 }
