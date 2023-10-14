@@ -1,8 +1,12 @@
 import 'package:certification_cources/HomeScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'firstScreen.dart';
 
 class Cources extends StatefulWidget{
   final int index;
@@ -77,15 +81,48 @@ class _CourcesState extends State<Cources> {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
         }, icon: Icon(Icons.home))
       ],),
-           body: Center(
-             child: YoutubePlayer(
-               controller: _controller,
-               showVideoProgressIndicator: true,
-               controlsTimeOut: const Duration(seconds: 3),
-               aspectRatio: 16/10,
-             ),
+           body:isLandscape? YoutubePlayer(
+                     controller: _controller,
+                     showVideoProgressIndicator: true,
+                     controlsTimeOut: const Duration(seconds: 3),
+                     aspectRatio: 16 / 10,
+                     ): ListView(
+             children: [
+               YoutubePlayer(
+                 controller: _controller,
+                 showVideoProgressIndicator: true,
+                 controlsTimeOut: const Duration(seconds: 3),
+                 aspectRatio: 16 / 10,
+               ),
+               Stack(
+                   alignment: AlignmentDirectional.bottomEnd,
+                   children: [
+                     Container(
+                       // height: double.infinity,
+                       height: 1200,
+                       child: InAppWebView(
+                         initialUrlRequest: URLRequest(
+                           url: Uri.parse(
+                               "https://practice.geeksforgeeks.org/courses?source=google&medium=cpc&device=c&keyword=gfg&matchtype=b&campaignid=20039445781&adgroup=147845288105&gad=1&gclid=CjwKCAjw-KipBhBtEiwAWjgwrG1fYiqVqMdIID2QFzv-9JkaOL0AE6WUMgzRY01DFY7__vMFPWsa2RoCDVoQAvD_BwE"),
+                         ),
+                       ),
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Container(
+                         height: 50,
+                         width: 200,
+                         child: FilledButton(onPressed: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>UserName()));
+                         }, child: Text("Certificate",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                       ),
+                     )
+                   ]
+               ),
+             ],
+           )
            ),
-    )
+
     );
   }
 }
