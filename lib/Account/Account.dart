@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:certification_cources/HomeScreen.dart';
 import 'package:certification_cources/auth/SingUp.dart';
+import 'package:certification_cources/host.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ import '../auth/login_screen.dart';
 import '../cources.dart';
 
 class Account extends StatefulWidget{
+  final int index;
+  @override
+  Account({required this.index});
   @override
   State<Account> createState() => _AccountState();
 }
@@ -92,6 +96,17 @@ class _AccountState extends State<Account> {
                    padding: const EdgeInsets.all(8.0),
                    child: Text(
                        "LogOut"
+                   ),
+                 ),
+               ),
+               ElevatedButton(
+                 onPressed: ()async{
+                   await Navigator.push(context, MaterialPageRoute(builder: (context)=>Host(homeScreen: HomeScreen(), cource: Cources(index:widget.index ,))));
+                 },
+                 child: Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Text(
+                       "Be a Host"
                    ),
                  ),
                ),

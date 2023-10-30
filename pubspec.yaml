@@ -43,6 +43,8 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   printing: ^5.11.0
   flutter_inappwebview: ^5.7.2+3
+  font_awesome_flutter: ^10.6.0
+
 
 
 dev_dependencies:

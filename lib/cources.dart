@@ -10,13 +10,6 @@ import 'firstScreen.dart';
 
 class Cources extends StatefulWidget {
   final int index;
-  @override
-  Cources({required this.index});
-  @override
-  State<Cources> createState() => _CourcesState();
-}
-
-class _CourcesState extends State<Cources> {
   var videourl = [
     "https://youtu.be/yGB9jhsEsr8?si=d4CWfzCierdmXtc8",
     "https://youtu.be/bSrm9RXwBaI?si=SzgQtnN9RYmZB18X",
@@ -30,12 +23,26 @@ class _CourcesState extends State<Cources> {
     "https://youtu.be/j-LOab_PzzU?si=Hu-INI3Sj5IDCZme",
     "https://youtu.be/mJ3bGvy0WAY?si=kGnJmVZkkW9HXtkL",
   ];
+  void addcource(String a)async {
+    videourl.add(a);
+    for(int i=0; i<videourl.length;i++){
+      print(videourl[i]);
+    }
+  }
+  @override
+  Cources({required this.index});
+  @override
+  State<Cources> createState() => _CourcesState();
+}
+
+class _CourcesState extends State<Cources> {
+
   late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    final videoId = YoutubePlayer.convertUrlToId(videourl[widget.index]);
+    final videoId = YoutubePlayer.convertUrlToId(widget.videourl[widget.index]);
     _controller = YoutubePlayerController(
       initialVideoId: videoId!,
       flags: const YoutubePlayerFlags(
@@ -136,6 +143,7 @@ class _CourcesState extends State<Cources> {
                     ],
                   ),
                   Padding(
+
                     padding: const EdgeInsets.all(8.0),
                     child: FilledButton(
                         onPressed: () {

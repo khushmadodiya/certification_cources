@@ -12,12 +12,20 @@ import 'Firebase_services/splesh.dart';
 
 class HomeScreen extends StatefulWidget{
   HomeScreen({super.key});
+  var Arrtitle = ['Cpp','Java','Python','C','HTML','CSS','Java Script','PHP','DBMS','Flutter','React Native'];
+  void addtitle(String a)async {
+    Arrtitle.add(a);
+    for(int i=0; i<Arrtitle.length;i++){
+      print(Arrtitle[i]);
+    }
+  }
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   SpleshServices spleshscreen = SpleshServices();
   void checkLoginStatus(int index) async {
     bool isLoggedIn = await spleshscreen.isLogin(context);
@@ -32,8 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  var Arrtitle = ['Cpp','Java','Python','C','HTML','CSS','Java Script','PHP','DBMS','Flutter','React Native'];
-
   // final int indexx;
   @override
   Widget build(BuildContext context) {
@@ -47,14 +53,23 @@ class _HomeScreenState extends State<HomeScreen> {
                    backgroundImage:AssetImage('assets/Images/p.png'),
                  ),
                  onTap: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Account()));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Account(index: widget.Arrtitle.length,)));
                  },
                ),
                SizedBox(width: 20,),
                Text('Certification Cources'),
-             ],
-           ),
 
+             ],
+
+           ),
+           actions: [
+             IconButton(onPressed: (){
+                setState(() {
+                  HomeScreen();
+                });
+             }, icon: Icon(Icons.refresh_outlined))
+
+           ],
            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
            automaticallyImplyLeading: false,
 
@@ -69,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           radius: 30,
                           backgroundImage:AssetImage('assets/Images/logo.png'),
                         ),
-                        title:Text(Arrtitle[index]+" Cource" ,style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400),) ,
+                        title:Text(widget.Arrtitle[index]+" Cource" ,style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400),) ,
                         trailing: ElevatedButton(
                           onPressed: ()async{
                             setState(() {
@@ -87,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 40,
                       );
                     },
-                    itemCount: Arrtitle.length
+                    itemCount: widget.Arrtitle.length
                 ),
               ),
          ),
